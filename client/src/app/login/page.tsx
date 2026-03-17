@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import api from '@/lib/api';
+import Link from 'next/link';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -52,6 +53,12 @@ export default function Login() {
         <button type="submit" className="w-full rounded bg-blue-600 p-2 text-white hover:bg-blue-700">
           Login
         </button>
+        <p className="text-center text-sm mt-5 text-gray-600">
+          Don't have an Account?{' '}
+          <Link href="/register" className="font-semibold text-blue-600 hover:underline">
+            Sign up here
+          </Link>
+        </p>
       </form>
     </div>
   );
