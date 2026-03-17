@@ -24,12 +24,12 @@ export default function Login() {
 
   return (
     <div className="flex h-screen items-center justify-center bg-gray-50">
-      <form onSubmit={handleSubmit} className="w-96 rounded-lg bg-white p-8 shadow-md">
+      <form onSubmit={handleSubmit} className="w-96 rounded-lg text-gray-700 bg-white p-8 shadow-md">
         <h2 className="mb-6 text-2xl font-bold text-gray-900">Sign In</h2>
         {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
         
         <div className="mb-4">
-          <label className="mb-1 block text-sm font-medium text-gray-700">Email</label>
+          <label className="mb-1 block text-sm font-medium ">Email</label>
           <input 
             type="email" 
             className="w-full rounded border p-2 focus:border-blue-500 focus:outline-none"
