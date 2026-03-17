@@ -57,7 +57,7 @@ exports.updateTask = async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
 
-    // Find and update in one atomic operation, strictly enforcing userId
+    // Find and update in one atomic operation
     const task = await Task.findOneAndUpdate(
       { _id: id, userId: req.userId },
       updates,

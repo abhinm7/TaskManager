@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import api from '@/lib/api';
-import CreateTaskModal from '@/components/page';
+import CreateTaskModal from '@/components/CreateTask/page';
+import EditTaskModal from '@/components/EditTask/page';
 
 interface Task {
     _id: string;
@@ -25,6 +26,7 @@ export default function Dashboard() {
     const [searchTerm, setSearchTerm] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingTask, setEditingTask] = useState<Task | null>(null);
 
     // Debounce the search input to prevent API spam
     useEffect(() => {
@@ -72,6 +74,18 @@ export default function Dashboard() {
             COMPLETED: 'bg-green-100 text-green-800',
         };
         return colors[status as keyof typeof colors] || 'bg-gray-100 text-gray-800';
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!window.confirm('Are you sure you want to delete this task?')) return;
+
+        try {
+            await api.delete(`/tasks/${id}`);
+            setTasks(tasks.filter(t => t._id !== id));
+        } catch (error) {
+            console.error('Failed to delete task', error);
+            alert('Failed to delete task');
+        }
     };
 
     return (
@@ -136,9 +150,27 @@ export default function Dashboard() {
                                         Created: {new Date(task.createdAt).toLocaleDateString()}
                                     </p>
                                 </div>
-                                <span className={`rounded-full px-3 py-1 text-xs font-medium ${getStatusBadge(task.status)}`}>
-                                    {task.status.replace('_', ' ')}
-                                </span>
+                                <div>
+                                    <div className="flex flex-col items-center gap-3">
+                                        <span className={`rounded-full px-3 py-1 text-xs font-medium ${getStatusBadge(task.status)}`}>
+                                            {task.status.replace('_', ' ')}
+                                        </span>
+                                        <div className="flex gap-4">
+                                            <button
+                                                onClick={() => setEditingTask(task)}
+                                                className="text-sm font-medium text-blue-600 hover:text-blue-800"
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(task._id)}
+                                                className="text-sm font-medium text-red-600 hover:text-red-800"
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -172,6 +204,14 @@ export default function Dashboard() {
                 onClose={() => setIsModalOpen(false)}
                 onSuccess={() => {
                     setPage(1);
+                }}
+            />
+            <EditTaskModal
+                task={editingTask}
+                isOpen={!!editingTask}
+                onClose={() => setEditingTask(null)}
+                onSuccess={() => {
+                    window.location.reload();
                 }}
             />
         </div>
