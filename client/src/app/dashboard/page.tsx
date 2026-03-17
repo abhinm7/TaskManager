@@ -108,7 +108,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* Controls: Search and Filter */}
-                <div className="mb-6 flex gap-4">
+                <div className="mb-6 flex text-gray-400 gap-4">
                     <input
                         type="text"
                         placeholder="Search tasks by title..."

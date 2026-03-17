@@ -63,7 +63,7 @@ export default function EditTaskModal({ task, isOpen, onClose, onSuccess }: Edit
 
         {error && <p className="mb-4 rounded bg-red-50 p-2 text-sm text-red-600">{error}</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 text-gray-400">
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">Title</label>
             <input

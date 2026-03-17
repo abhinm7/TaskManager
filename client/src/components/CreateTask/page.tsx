@@ -16,7 +16,7 @@ export default function CreateTaskModal({ isOpen, onClose, onSuccess }: CreateTa
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Edge Case: Reset form state whenever the modal closes
+  // Reset form state whenever the modal closes
   useEffect(() => {
     if (!isOpen) {
       setTitle('');
@@ -57,7 +57,7 @@ export default function CreateTaskModal({ isOpen, onClose, onSuccess }: CreateTa
 
         {error && <p className="mb-4 rounded bg-red-50 p-2 text-sm text-red-600">{error}</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 text-gray-400">
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700">Title <span className="text-red-500">*</span></label>
             <input
